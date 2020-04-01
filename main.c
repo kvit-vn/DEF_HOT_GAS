@@ -56,6 +56,7 @@ void delay_sec(uint16_t time)
         GPIO_WriteReverse(LED_PORT, LED);
         time--;
     }
+    GPIO_WriteHigh(LED_PORT, LED);//Выключаем светодиод
 }
 
 ErrorStatus status = FALSE;
@@ -90,7 +91,6 @@ int main( void )
     GPIO_WriteLow(OUT_PORT, COMP_OUT); //Выключаем компрессор
     GPIO_WriteLow(OUT_PORT,DEF_OUT);// Выключаем клапан оттайки
     delay_sec(180);//Выжидаем 3 мин
-    GPIO_WriteLow(LED_PORT, LED);//Выключаем светодиод
     for(;;)
     {
 
@@ -109,20 +109,16 @@ int main( void )
 		
 			GPIO_WriteLow(OUT_PORT, COMP_OUT); //Выключаем компрессор
 			delay_sec(180);//Выжидаем 3 мин
-    			GPIO_WriteLow(LED_PORT, LED);//Выключаем светодиод
 			GPIO_WriteHigh(OUT_PORT,DEF_OUT);// Включаем клапан оттайки
 			delay_sec(180);//Выжидаем 3 мин
-    			GPIO_WriteLow(LED_PORT, LED);//Выключаем светодиод
 			if(!GPIO_ReadInputPin(IN_PORT,COMP_IN)) GPIO_WriteHigh(OUT_PORT, COMP_OUT);//Включаем компрессор, если он включенконтроллером	
 			DefPrevState=DefCurState;	
 		}else{
 
 			GPIO_WriteLow(OUT_PORT, COMP_OUT); //Выключаем компрессор
 			delay_sec(180);//Выжидаем 3 мин
-    			GPIO_WriteLow(LED_PORT, LED);//Выключаем светодиод
 			GPIO_WriteLow(OUT_PORT,DEF_OUT);// Выключаем клапан оттайки
 			delay_sec(180);//Выжидаем 3 мин
-    			GPIO_WriteLow(LED_PORT, LED);//Выключаем светодиод
 			if(!GPIO_ReadInputPin(IN_PORT,COMP_IN)) GPIO_WriteHigh(OUT_PORT, COMP_OUT);//Включаем компрессор, если он включенконтроллером	
 			DefPrevState=DefCurState;	
 
